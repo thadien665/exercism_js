@@ -38,11 +38,11 @@ export function frontDoorResponse(line) {
  * @returns {string} the front door password
  */
 export function frontDoorPassword(word) {
-  let first_letter_capital = word[0].toLocaleUpperCase;
-  let rest = word.slice(1, word.length);
-  let rest_of_word_lower = rest.toLocaleLowerCase;
+  let first_letter_capital = word[0].toUpperCase();
+  let rest = word.slice(1);
+  let rest_of_word_lower = rest.toLowerCase();
   
-  return first_letter_capital + rest_of_word_lower; 
+  return word[0].toUpperCase() + word.slice(1).toLowerCase(); 
 }
 
 /**
@@ -53,9 +53,10 @@ export function frontDoorPassword(word) {
  * @returns {string}
  */
 export function backDoorResponse(line) {
-  let trimed_line = line.trim;
+  let trimed_line = line.trim();
+
   
-  return trimed_line[trimed_line.length];
+  return trimed_line[line.length-1];
 }
 
 /**
@@ -70,5 +71,5 @@ export function backDoorPassword(word) {
   let rest_of_word = word.slice(1, word.length);
   let lower_rest_of_word = rest_of_word.toLowerCase;
   
-  return first_capital_letter + lower_rest_of_word + ', please';
+  return word[0].toUpperCase() + word.slice(1).toLowerCase() + ', please';
 }
