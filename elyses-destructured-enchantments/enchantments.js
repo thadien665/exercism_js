@@ -9,7 +9,8 @@
  * @returns {Card} the first card in the deck
  */
 export function getFirstCard(deck) {
-  throw new Error('Implement the getFirstCard function');
+  let [a, ... rest_of_cards] = deck;
+  return a;
 }
 
 /**
@@ -20,7 +21,8 @@ export function getFirstCard(deck) {
  * @returns {Card} the second card in the deck
  */
 export function getSecondCard(deck) {
-  throw new Error('Implement the getSecondCard function');
+  let [a, b, ...rest_of_cards] = deck;
+  return b;  
 }
 
 /**
@@ -31,7 +33,10 @@ export function getSecondCard(deck) {
  * @returns {Card[]} new deck with reordered cards
  */
 export function swapTopTwoCards(deck) {
-  throw new Error('Implement the swapTopTwoCards function');
+  let [a, b, ...rest_of_cards] = deck;
+  deck[0] = b;
+  deck[1] = a;
+  return deck;
 }
 
 /**
@@ -43,7 +48,8 @@ export function swapTopTwoCards(deck) {
  * deck and a new deck containing all the other cards
  */
 export function discardTopCard(deck) {
-  throw new Error('Implement the discardTopCard function');
+  let [a, ...rest_of_cards] = deck;
+  return [a, [...rest_of_cards]];
 }
 
 /** @type {Card[]} **/
@@ -58,5 +64,7 @@ const FACE_CARDS = ['jack', 'queen', 'king'];
  * third, and fourth cards are the face cards
  */
 export function insertFaceCards(deck) {
-  throw new Error('Implement the insertFaceCards function');
+  let [a, b, c] = FACE_CARDS;
+  let [first, ...restofcards] = deck;
+  return [first, a, b, c, ...restofcards];
 }
