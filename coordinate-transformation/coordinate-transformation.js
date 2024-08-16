@@ -65,5 +65,16 @@ export function composeTransform(f, g) {
  *  if the arguments are the same on subsequent calls, or compute a new result if they are different.
  */
 export function memoizeTransform(f) {
-  ;
+  let first_x, first_y, first_result;
+  return function check(x,y) {
+    if (first_x === x && first_y === y) {
+      return first_result;
+    }
+    else {
+      first_x = x;
+      first_y = y;
+      first_result = f(x,y);
+      return first_result;
+    }
+  }
 }
