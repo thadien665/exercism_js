@@ -1,6 +1,7 @@
 // @ts-check
 
 import { template } from "@babel/core";
+import { createHash } from "crypto";
 
 export class ArgumentError extends Error {}
 
@@ -50,39 +51,21 @@ export function reportOverheating(temperature) {
  * @throws {ArgumentError|OverheatingError|Error}
  */
 export function monitorTheMachine(actions) {
-  try {actions.check()}
-  catch { 
-    switch (actions.check) {
-      case ArgumentError:
-        actions.alertDeadSensor();
-        break;
-      case OverheatingError:
+  try { actions.check() }
+  catch (error) {
+    if (error instanceof ArgumentError) {
+      actions.alertDeadSensor();
+    }
+    else if (error instanceof OverheatingError) {
+      if (error.temperature > 600) {
+        actions.shutdown();
+      }
+      else {
         actions.alertOverheating();
-        break;
-    }}
+      }
+    }
+    else {
+      actions.check();
+    }
   }
-
-
-export function check(temperature) {
-  if (temperature === null) {
-    throw new ArgumentError;
-  }
-  else if (temperature > 500 && temperature < 600) {
-    throw new OverheatingError(temperature);
-  }
-  else if (temperature > 600) {
-    actions.shutdown();
-  }
-}
-
-export function alertDeadSensor() {
- return 'sensor dead, technician needed';
-}
-
-export function alertOverheating() {
-  return 'turning on warning light';
-}
-
-export function shutdown() {
-  return 'shutting down';
 }
